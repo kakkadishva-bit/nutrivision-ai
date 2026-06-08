@@ -51,9 +51,20 @@ if(isset($_POST['add_meal'])) {
         $meal_error = "Quantity must be greater than 0.";
     } else {
         $food_safe = mysqli_real_escape_string($conn, $food);
-        $query = "INSERT INTO meals (user_id, food_name, quantity) VALUES ('$user_id', '$food_safe', '$quantity')";
-        if(mysqli_query($conn, $query)) {
-            $meal_added = true;
+       $query = "INSERT INTO meals (user_id, food_name, quantity)
+VALUES ('$user_id', '$food_safe', '$quantity')";
+
+if(mysqli_query($conn, $query)) {
+
+    mysqli_query($conn,"
+    INSERT INTO meal_history
+    (user_id, food_name, quantity)
+    VALUES
+    ('$user_id','$food_safe','$quantity')
+    ");
+
+    $meal_added = true;
+}
             // Try to get nutrition from database
             $nr = mysqli_query($conn, "SELECT * FROM food_items WHERE food_name='$food_safe'");
             if ($nr && mysqli_num_rows($nr) > 0) {
