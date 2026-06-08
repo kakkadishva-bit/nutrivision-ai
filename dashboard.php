@@ -55,7 +55,7 @@ $total_carbs = $row['total_carbs'] ?? 0;
 $total_fat = $row['total_fat'] ?? 0;
 $total_fiber = $row['total_fiber'] ?? 0;
 $total_sugar = $row['total_sugar'] ?? 0;
-
+$total_cholesterol = $row['total_cholesterol'] ?? 0;
 // Get ALL recent meals with delete option
 $meal_query = "SELECT m.*, 
     f.calories, f.protein, f.carbs, f.fat, f.fiber, f.sugar,
@@ -242,6 +242,10 @@ if ($late_result) {
                 <h1 style="color: var(--primary);"><?php echo number_format($total_protein, 1); ?> g</h1>
                 <p style="color: var(--gray); font-size: 0.85rem;">total today</p>
             </div>
+            <div class="card">
+    <h3>🫓 Cholesterol</h3>
+    <h1><?php echo round($total_cholesterol, 1); ?> mg</h1>
+</div>
             <div class="card" style="border-left: 4px solid var(--warning);">
                 <div class="card-icon">🌾</div>
                 <h3>Carbs</h3>
