@@ -41,7 +41,8 @@ SUM(food_items.protein * meals.quantity) AS total_protein,
 SUM(food_items.carbs * meals.quantity) AS total_carbs,
 SUM(food_items.fat * meals.quantity) AS total_fat,
 SUM(food_items.fiber * meals.quantity) AS total_fiber,
-SUM(food_items.sugar * meals.quantity) AS total_sugar
+SUM(food_items.sugar * meals.quantity) AS total_sugar,
+SUM(food_items.cholesterol * meals.quantity) AS total_cholesterol
 FROM meals
 JOIN food_items ON meals.food_name = food_items.food_name
 WHERE meals.user_id='$user_id'";
@@ -224,12 +225,17 @@ if ($late_result) {
                 <p style="color: var(--gray); font-size: 0.85rem;">kcal today</p>
             </div>
             <div class="card">
+    <h3>🫓 Cholesterol</h3>
+    <h1><?php echo round($row['total_cholesterol'],1); ?> mg</h1>
+</div>
+            <div class="card">
     <h3>🔥 Today's Calories</h3>
     <h1>
         <?php echo round($todayCalories['total_calories'] ?? 0); ?>
     </h1>
     <p>kcal consumed today</p>
 </div>
+            
             <div class="card" style="border-left: 4px solid var(--primary);">
                 <div class="card-icon">💪</div>
                 <h3>Protein</h3>
