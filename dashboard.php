@@ -9,6 +9,15 @@ if(!isset($_SESSION['user_id'])) {
 include 'db.php';
 
 $user_id = $_SESSION['user_id'];
+$todayCaloriesQuery = mysqli_query($conn,"
+SELECT SUM(f.calories * m.quantity) AS total_calories
+FROM meal_history m
+JOIN food_items f ON m.food_name = f.food_name
+WHERE m.user_id='$user_id'
+AND DATE(m.meal_time)=CURDATE()
+");
+
+$todayCalories = mysqli_fetch_assoc($todayCaloriesQuery);
 $delete_msg = '';
 
 // Handle delete meal
@@ -214,6 +223,13 @@ if ($late_result) {
                 <h1 style="color: var(--danger);"><?php echo number_format($total_calories, 0); ?></h1>
                 <p style="color: var(--gray); font-size: 0.85rem;">kcal today</p>
             </div>
+            <div class="card">
+    <h3>🔥 Today's Calories</h3>
+    <h1>
+        <?php echo round($todayCalories['total_calories'] ?? 0); ?>
+    </h1>
+    <p>kcal consumed today</p>
+</div>
             <div class="card" style="border-left: 4px solid var(--primary);">
                 <div class="card-icon">💪</div>
                 <h3>Protein</h3>
