@@ -1,7 +1,7 @@
 <?php
 
 $conn = mysqli_connect(
-    "localhost",
+    "localhost:8081",
     "root",
     "Admin@123",
     "nutrivision_db"
